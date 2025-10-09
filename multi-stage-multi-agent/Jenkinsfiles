@@ -1,0 +1,25 @@
+pipeline {
+  agent none
+  stages {
+    stage('Install Latest Node.js') {
+      agent {
+        docker {
+          image 'ubuntu:latest'
+          args '-u root' // Run as root to install packages
+        }
+      }
+      steps {
+        sh '''
+          apt-get update
+          apt-get install -y curl gnupg
+          curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
+          apt-get install -y nodejs
+          echo "Node.js version:"
+          node -v
+          echo "npm version:"
+          npm -v
+        '''
+      }
+    }
+  }
+}
