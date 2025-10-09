@@ -13,7 +13,8 @@ pipeline {
           apt-get update
           apt-get install -y curl gnupg
           curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
-          apt-get install -y nodejs
+           apt-get update --fix-missing
+          apt-get install -y nodejs || apt-get install -y nodejs --fix-missing
           echo "Node.js version:"
           node -v
           echo "npm version:"
