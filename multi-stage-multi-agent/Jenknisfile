@@ -1,0 +1,37 @@
+pipeline {
+  agent {
+    docker {
+      image 'ubuntu:latest'
+      args '-u root' // Run as root to install packages
+    }
+  }
+  stages {
+    stage('Install Updates and curl') {
+      steps {
+        sh '''
+          apt-get update
+          apt-get install -y curl
+          curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+          apt-get install -y nodejs
+          node -v
+          npm -v
+        '''
+      }
+    }
+    stage('Install Node Js and Npm') {
+      steps {
+        sh '''
+          apt-get install -y nodejs
+        '''
+      }
+    }
+  }
+  stage('View version of Node Js and Npm') {
+      steps {
+        sh '''
+          node -v
+          npm -v
+        '''
+      }
+  }
+}
